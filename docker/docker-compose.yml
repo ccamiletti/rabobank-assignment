@@ -1,0 +1,38 @@
+# A Docker Compose must always start with the version tag.
+version: '3'
+# You should know that Docker Compose works with services.
+# 1 service = 1 container.
+# For example, a service, a server, a client, a database...
+# We use the keyword 'services' to start to create services.
+services:
+  database:
+    container_name: ccs-tech-server
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=ccs-tech-db
+      - POSTGRES_USER=ccs-tech-user
+      - POSTGRES_PASSWORD=ccs-tech-password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/data/postgres
+
+  adminer_container:
+    image: adminer:latest
+    environment:
+      ADMINER_DEFAULT_SERVER: ccs-tech-server
+    ports:
+      - 1010:8080
+
+  nginx:
+    container_name: nginx-proxy
+    build: ./nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+volumes:
+  mysql_data:
+  postgres:
