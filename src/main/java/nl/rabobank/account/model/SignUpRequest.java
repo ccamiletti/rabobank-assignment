@@ -1,11 +1,13 @@
 package nl.rabobank.account.model;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
+@Builder
 public class SignUpRequest {
 
     @NonNull

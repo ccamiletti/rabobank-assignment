@@ -1,6 +1,6 @@
 package nl.rabobank.account.model;
 
-public enum AccountStatus {
+public enum CardStatus {
 
     ACTIVE,
     BLOCKED,

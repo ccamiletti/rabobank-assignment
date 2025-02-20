@@ -3,7 +3,7 @@ package nl.rabobank.account.entity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import nl.rabobank.account.model.AccountStatus;
+import nl.rabobank.account.model.CardStatus;
 import nl.rabobank.account.model.CardTypeEnum;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
@@ -31,7 +31,7 @@ public class CardEntity {
     private final Long userId;
 
     @Column("status")
-    private final AccountStatus status;
+    private final CardStatus status;
 
 
 

@@ -11,6 +11,7 @@ import nl.rabobank.account.repository.TransactionRepository;
 import nl.rabobank.account.util.AccountBalance;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -27,6 +28,7 @@ public class DebitCardService extends CardServiceCommon implements CardService {
     }
 
     @Override
+    @Transactional
     public Mono<Void> withdraw(final WithdrawalRequest withdrawalRequest) {
         return cardRepository.findByNumber(withdrawalRequest.getCardNumber())
                 .flatMap(cardEntity -> findAccountByIban(cardEntity.getIban())
@@ -40,6 +42,7 @@ public class DebitCardService extends CardServiceCommon implements CardService {
     }
 
     @Override
+    @Transactional
     public Mono<Void> transfer(final TransferRequest transferRequest) {
         return validateTransfer(transferRequest.getTargetAccountNumber(), transferRequest.getOriginAccountNumber(), transferRequest.getAmount())
                 .flatMap(accountEntity -> updateAccountBalance(accountEntity, transferRequest.getAmount(), subtractBalance))

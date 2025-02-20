@@ -4,7 +4,6 @@ package nl.rabobank.account.entity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import nl.rabobank.account.model.AccountStatus;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;

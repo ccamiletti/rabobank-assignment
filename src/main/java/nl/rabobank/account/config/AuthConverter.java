@@ -23,7 +23,6 @@ public class AuthConverter implements ServerAuthenticationConverter {
                 .filter(header -> header.startsWith(BEARER))
                 .map(header -> header.substring(BEARER.length()))
                 .filter(jwtService::validate)
-                //.switchIfEmpty(Mono.error(new JwtAuthenticationException("token is not valid", HttpStatus.BAD_REQUEST)))
                 .map(BearerToken::new);
 
     }

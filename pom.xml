@@ -33,7 +33,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-boot-starter-webflux.version>3.4.2</spring-boot-starter-webflux.version>
         <spring-boot-starter-data-r2dbc.version>3.4.2</spring-boot-starter-data-r2dbc.version>
-        <r2dbc-postgresql.version>0.8.13.RELEASE</r2dbc-postgresql.version>
+        <r2dbc-postgresql.version>1.0.7.RELEASE</r2dbc-postgresql.version>
         <springdoc-openapi-starter-webflux-ui.version>2.8.4</springdoc-openapi-starter-webflux-ui.version>
         <lombok.version>1.18.30</lombok.version>
         <spring-boot.version>3.2.0</spring-boot.version>

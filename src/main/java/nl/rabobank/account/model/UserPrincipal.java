@@ -38,7 +38,6 @@ public class UserPrincipal implements UserDetails {
                 .name(userEntity.getName())
                 .lastName(userEntity.getLastName())
                 .build();
-
     }
 
     @Override

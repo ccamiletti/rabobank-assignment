@@ -28,35 +28,17 @@ public class SecurityConfig {
         AuthenticationWebFilter authenticationWebFilter = new AuthenticationWebFilter(authenticationManager);
         authenticationWebFilter.setServerAuthenticationConverter(authConverter);
         return http.authorizeExchange(auth -> {
-            auth.pathMatchers("/login").permitAll();
-            auth.pathMatchers("/test").permitAll();
-            auth.pathMatchers("/signUp").permitAll();
-            auth.pathMatchers("/auth").authenticated();
-            auth.anyExchange().authenticated();
-        })
-        .addFilterAt(authenticationWebFilter, SecurityWebFiltersOrder.AUTHENTICATION)
-        .httpBasic().disable()
-        .formLogin().disable()
-        .csrf().disable()
-        .cors().configurationSource(corsConfigurationSource()).and()
+                auth.pathMatchers("/login").permitAll();
+                auth.pathMatchers("/test").permitAll();
+                auth.pathMatchers("/signUp").permitAll();
+                auth.pathMatchers("/auth").authenticated();
+                auth.anyExchange().authenticated();
+            })
+            .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
+            .csrf(ServerHttpSecurity.CsrfSpec::disable)
+            .addFilterAt(authenticationWebFilter, SecurityWebFiltersOrder.AUTHENTICATION)
         .build();
     }
 
-    private CorsConfigurationSource corsConfigurationSource() {
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration().applyPermitDefaultValues();
-        config.addAllowedMethod(HttpMethod.POST);
-        config.addAllowedMethod(HttpMethod.PUT);
-        config.addAllowedMethod(HttpMethod.GET);
-        config.addAllowedMethod(HttpMethod.OPTIONS);
-        config.addAllowedMethod(HttpMethod.DELETE);
-        config.addAllowedHeader("Origin");
-        config.addAllowedHeader("X-Requested-With");
-        config.addAllowedHeader("Content-Type");
-        config.addAllowedHeader("Accept");
-        config.addAllowedHeader("Authorization");
-        source.registerCorsConfiguration("/**", config);
-        return source;
-    }
 
 }

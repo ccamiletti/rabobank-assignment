@@ -1,6 +1,9 @@
 package nl.rabobank.account.service;
 
+import lombok.extern.slf4j.Slf4j;
 import nl.rabobank.account.entity.AccountEntity;
+import nl.rabobank.account.entity.CardEntity;
+import nl.rabobank.account.exception.CardException;
 import nl.rabobank.account.model.CardTypeEnum;
 import nl.rabobank.account.model.TransactionTypeEnum;
 import nl.rabobank.account.model.TransferRequest;
@@ -10,10 +13,13 @@ import nl.rabobank.account.repository.CardRepository;
 import nl.rabobank.account.repository.TransactionRepository;
 import nl.rabobank.account.util.AccountBalance;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 @Service
+@Slf4j
 public class CreditCardService extends CardServiceCommon implements CardService {
 
     public final CardRepository cardRepository;
@@ -27,8 +33,10 @@ public class CreditCardService extends CardServiceCommon implements CardService 
     }
 
     @Override
+    @Transactional
     public Mono<Void> withdraw(WithdrawalRequest withdrawalRequest) {
         return cardRepository.findByNumber(withdrawalRequest.getCardNumber())
+                .switchIfEmpty(getMonoErrorCardNotFound(withdrawalRequest.getCardNumber()))
                 .flatMap(cardEntity -> findAccountByIban(cardEntity.getIban())
                         .filter(accountEntity -> isEnoughBalance(accountEntity, applyCharge(withdrawalRequest.getAmount())))
                         .flatMap(accountEntity -> updateAccountBalance(accountEntity, applyCharge(withdrawalRequest.getAmount()), subtractBalance))
@@ -53,6 +61,7 @@ public class CreditCardService extends CardServiceCommon implements CardService 
     }
 
     @Override
+    @Transactional
     public Mono<Void> transfer(TransferRequest transferRequest) {
         return validateTransfer(transferRequest.getTargetAccountNumber(), transferRequest.getOriginAccountNumber(), applyCharge(transferRequest.getAmount()))
                 .flatMap(originAccount -> updateAccountBalance(originAccount, applyCharge(transferRequest.getAmount()), subtractBalance))
@@ -71,11 +80,16 @@ public class CreditCardService extends CardServiceCommon implements CardService 
         return null;
     }
 
+    private Mono<CardEntity> getMonoErrorCardNotFound(final Long cardNumber) {
+        return Mono.defer(() -> {
+            log.error("Card with number {} not found", cardNumber);
+            return Mono.error(new CardException("Card NOT FOUND", HttpStatus.INTERNAL_SERVER_ERROR));
+        });
+    }
+
     @Override
     public Boolean isApplicable(CardTypeEnum cardTypeEnum) {
         return cardTypeEnum == CardTypeEnum.CREDIT_CARD;
     }
-
-
 
 }
