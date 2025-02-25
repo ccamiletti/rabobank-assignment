@@ -1,78 +1,118 @@
-# Rebobank java Assignment
+
+# Rabo Assignment-App
+
+Minimal [Spring Boot](http://projects.spring.io/spring-boot/) sample app.
 
 ## Requirements
+
 For building and running the application you need:
 
 - [JDK 21](https://www.oracle.com/java/technologies/downloads/#java21)
 - [Maven 3](https://maven.apache.org)
-- Docker and docker compose
+- [Docker](https://www.docker.com/)
+## Running the application locally
 
-# Build Project
+This app is running in a docker container
 
-	mvn package
+```shell
+docker compose up -d
+```
 
-# REST API
+This will create:
 
-This is a example of a Spring-Boot application providing a REST API.
+* A container with:
+    - Rabobank-Assgnment-App
 
-## Run the app
+* A container with:
+    - [PostgresSQL Adminer](http://localhost:1010/?pgsql=ccs-tech-server&username=ccs-tech-user&db=ccs-tech-db&ns=public)
 
-    mvn spring-boot:run
+* A container with:
+    - PostgresSQL Database
 
-## Run the tests
+## About the Service
 
-    mvn test
+The service is just a simple bank account app. It uses database to store the data (Postgres).
+The application runs in a fully asynchronous environment taking advantage of webflux and r2dbc for database connections.
 
-# EndPoints
+By default, the database is populated with the following data:
+* User Information
+  * User1:
+      * username: test
+      * password: test
+  * User2:
+      * username: test2
+      * password: test2
 
-The REST API to rabobank-assignment app is described below.
+* Card Information
+    * Card1:
+        * number: 11111
+        * iban: RABO111
+        * type: DEBIT_CARD
+    * Card2:
+        * number: 22222
+        * iban: RABO222
+        * type: CREDIT_CARD
 
-## Set upperNumber service (value between 1 and 25)
+Here are some endpoints you can call:
 
-### Request
+### Login
 
-`POST /service/upperNumber/set?upperNumber=25`
+```
+POST http://localhost:8080/api/login
+Accept: application/json
+Content-Type: application/json
+{
+    "userName":"test",
+    "password":"test"
+}    
 
-    curl -i -H 'Accept: application/json' http://localhost:8080/service/upperNumber/set?upperNumber=25
+RESPONSE: HTTP 200
+{
+    "userName":"test",
+    "token":"token-string"
+} 
+```
 
-### Response
+### Transfer
+```
+POST http://localhost:8080/api/account/transfer
+Accept: application/json
+Content-Type: application/json
+{
+    "originAccountNumber": "RABO111",
+    "targetAccountNumber": "RABO222",
+    "amount": 100
+}
 
-    Request URL: http://localhost:8080/service/upperNumber/set?upperNumber=25
-    Request Method: POST
-    Status Code: 200 
-    Remote Address: [::1]:8080
+RESPONSE: HTTP 200
+```
 
+### Withdrawal
+```
+POST http://localhost:8080/api/account/withdraw
+Accept: application/json
+Content-Type: application/json
+{
+    "cardNumber": "11111",
+    "amount": 100
+}
 
-## Get Least Common Multiple
-### Request
+RESPONSE: HTTP 200
+```
 
-`GET /service/math/getLeastCommonMultiple`
+### All accounts
+```
+GET http://localhost:8080/api/account/all
 
-    curl -i -H 'Accept: application/json' http://localhost:8080/service/math/getLeastCommonMultiple
-    curl -i -H 'Accept: application/xml' http://localhost:8080/service/math/getLeastCommonMultiple
-
-### Response
-
-### Accept: application/json
-
-    Request URL: http://localhost:8080/service/math/getLeastCommonMultiple
-    Request Method: GET
-    Status Code: 200
-    Remote Address: [::1]:8080
-    
-	{
-	    "leastCommonMultiple": 2520,
-	    "executionTime": 2
-	}
-
-### Accept: application/xml
-
-    Request URL: http://localhost:8080/service/math/getLeastCommonMultiple
-    Request Method: GET
-    Status Code: 200
-    Remote Address: [::1]:8080
-    
-	<LeastCommonMultipleDTO>
-	    <leastCommonMultiple>2520</leastCommonMultiple>
-	    <executionTime>2</executionTime>
-	</LeastCommonMultipleDTO>
+BODY RESPONSE:
+[
+    {
+        "accountNumber": "RABO111",
+        "balance": 20000.0
+    },
+    {
+        "accountNumber": "RABO222",
+        "balance": 20000.0
+    }
+]
+```

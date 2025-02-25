@@ -75,6 +75,10 @@ CREATE TABLE "public"."users" (
     "password" character varying(500) NOT NULL,
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
+INSERT INTO "users" ("id", "username", "name", "lastname", "password") VALUES
+(1,	'test@gmail.com',	'test',	'test',	'$2a$10$qK1jRZVLBEMYvwbtPD6b0uhzmkbsDz1NLdjUNWfW8aZpgIQn9U9Bi'),
+(2,	'test2@gmail.com',	'test2',	'test2',	'$2a$10$sxXE4666rfvi3Xj4P9/80eGlxA8hTglZGa51gjH4yS7K4QUOeo32a');
+
 
 
 -- 2025-02-25 10:36:21.868798+00

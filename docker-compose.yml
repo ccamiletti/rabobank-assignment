@@ -30,7 +30,7 @@ services:
     networks:
       - rabo-network
 
-  rabo_assigment:
+  rabo_assignment:
     build:
       context: .  # Directory to build Docker image from.
       dockerfile: Dockerfile  # Dockerfile to use for building the image.
