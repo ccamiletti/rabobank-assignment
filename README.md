@@ -55,7 +55,7 @@ By default, the database is populated with the following data:
 
 Here are some endpoints you can call:
 
-### Login
+### Login (No Auth)
 
 ```
 POST http://localhost:8080/api/login
@@ -73,7 +73,7 @@ RESPONSE: HTTP 200
 } 
 ```
 
-### Transfer
+### Transfer (Bearer Token)
 ```
 POST http://localhost:8080/api/account/transfer
 Accept: application/json
@@ -87,7 +87,7 @@ Content-Type: application/json
 RESPONSE: HTTP 200
 ```
 
-### Withdrawal
+### Withdrawal (Bearer Token)
 ```
 POST http://localhost:8080/api/account/withdraw
 Accept: application/json
@@ -100,7 +100,7 @@ Content-Type: application/json
 RESPONSE: HTTP 200
 ```
 
-### All accounts
+### All accounts (Bearer Token)
 ```
 GET http://localhost:8080/api/account/all
 
