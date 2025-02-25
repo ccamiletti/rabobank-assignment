@@ -20,7 +20,7 @@ public class AccountController {
 
     private final AccountService accountService;
 
-    @GetMapping("/current-balance")
+    @GetMapping("/all")
     public Flux<CurrentBalanceResponse> getBalance() {
         return accountService.getBalance();
     }

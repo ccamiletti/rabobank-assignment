@@ -13,6 +13,8 @@ import nl.rabobank.account.model.WithdrawalRequest;
 import nl.rabobank.account.repository.AccountRepository;
 import nl.rabobank.account.repository.CardRepository;
 import nl.rabobank.account.repository.TransactionRepository;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -31,6 +33,8 @@ import reactor.test.StepVerifier;
 import java.time.LocalDateTime;
 import java.time.Month;
 
+import static org.mockito.Mockito.mock;
+
 @ExtendWith(SpringExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DebitCardServiceTest {
@@ -47,15 +51,20 @@ class DebitCardServiceTest {
     @Mock
     private TransactionRepository transactionRepository;
 
-    LocalDateTime currentLocalDate;
+    LocalDateTime currentLocalDate = LocalDateTime.of(2025, Month.APRIL, 12, 0, 0, 0);
+    MockedStatic<LocalDateTime> topDateTimeUtilMock = Mockito.mockStatic(LocalDateTime.class);
 
     @BeforeAll
     public void setup() {
         ReflectionTestUtils.setField(debitCardService, "debitCardAmountPercent", 0.0);
-        currentLocalDate = LocalDateTime.of(2025, Month.APRIL, 12, 0, 0, 0);
-        MockedStatic<LocalDateTime> topDateTimeUtilMock = Mockito.mockStatic(LocalDateTime.class);
         topDateTimeUtilMock.when(LocalDateTime::now).thenReturn(currentLocalDate);
     }
+
+    @AfterAll
+    public void after() {
+        topDateTimeUtilMock.close();
+    }
+
 
     @Test
     public void withdraw_ok() {

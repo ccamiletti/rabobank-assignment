@@ -38,6 +38,7 @@ public class AuthenticationService {
 
     public Mono<LoginResponse> signIn(LoginRequest loginRequest) {
         return reactiveUserDetailsService.findByUsername(loginRequest.getUserName())
+                .switchIfEmpty(Mono.error(new UserException("User Not Found", HttpStatus.INTERNAL_SERVER_ERROR)))
                 .map(userDetails -> getLoginResponse(loginRequest, userDetails));
     }
 

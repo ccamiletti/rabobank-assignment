@@ -50,8 +50,13 @@ public class AccountService {
     }
 
     private Mono<CardService> getCardServiceByCardNumber(Long cardNumber) {
-        Mono<CardEntity> cardEntityMono = cardRepository.findByNumber(cardNumber);
-        return cardEntityMono.map(cardEntity -> findCardServiceByCardType(cardEntity.getType()));
+        return cardRepository.findByNumber(cardNumber)
+                .map(cardEntity -> findCardServiceByCardType(cardEntity.getType()))
+                .switchIfEmpty(Mono.defer(() -> {
+                    log.error("Card with number {} does not exist", cardNumber);
+                    return Mono.error(new AccountException("Card NOT FOUND", HttpStatus.INTERNAL_SERVER_ERROR));
+                }));
+
     }
 
     private Mono<CardService> getCardServiceByAccountNumber(String iban) {

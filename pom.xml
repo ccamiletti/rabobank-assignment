@@ -33,18 +33,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-boot-starter-webflux.version>3.4.2</spring-boot-starter-webflux.version>
         <spring-boot-starter-data-r2dbc.version>3.4.2</spring-boot-starter-data-r2dbc.version>
-        <r2dbc-postgresql.version>1.0.7.RELEASE</r2dbc-postgresql.version>
-        <springdoc-openapi-starter-webflux-ui.version>2.8.4</springdoc-openapi-starter-webflux-ui.version>
+        <io-r2dbc-postgresql.version>0.8.13.RELEASE</io-r2dbc-postgresql.version>
         <lombok.version>1.18.30</lombok.version>
         <spring-boot.version>3.2.0</spring-boot.version>
-        <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
-        <json-patch.version>1.13</json-patch.version>
-        <jjwt-api.version>0.11.5</jjwt-api.version>
-        <jjwt-impl.version>0.11.5</jjwt-impl.version>
-        <springdoc-openapi-starter-webmvc-ui.version>2.2.0
-        </springdoc-openapi-starter-webmvc-ui.version>
+        <r2dbc-postgresql.version>0.8.13.RELEASE</r2dbc-postgresql.version>
+        <org-r2dbc-postgresql.version>1.0.7.RELEASE</org-r2dbc-postgresql.version>
+        <java-jwt.version>4.0.0</java-jwt.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <springdoc-openapi-starter-webflux-ui.version>2.3.0</springdoc-openapi-starter-webflux-ui.version>
     </properties>
     <dependencies>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
@@ -54,14 +53,9 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-r2dbc</artifactId>
-            <version>${spring-boot-starter-webflux.version}</version>
+            <version>${spring-boot-starter-data-r2dbc.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>r2dbc-postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -71,16 +65,13 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
-            <version>${springdoc-openapi-starter-webflux-ui.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-test</artifactId>
@@ -88,9 +79,16 @@
         </dependency>
 
         <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>r2dbc-postgresql</artifactId>
+            <version>${org-r2dbc-postgresql.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
             <groupId>io.r2dbc</groupId>
             <artifactId>r2dbc-postgresql</artifactId>
-            <version>${r2dbc-postgresql.version}</version>
+            <version>${io-r2dbc-postgresql.version}</version>
         </dependency>
 
         <dependency>
@@ -105,7 +103,6 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-            <version>4.18.0</version>
         </dependency>
 
         <dependency>
@@ -117,18 +114,19 @@
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
-            <version>4.0.0</version>
+            <version>${java-jwt.version}</version>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
-            <version>0.9.1</version>
+            <version>${jjwt.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
+
     </dependencies>
 
     <build>

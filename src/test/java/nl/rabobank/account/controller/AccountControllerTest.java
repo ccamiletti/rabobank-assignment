@@ -33,7 +33,7 @@ class AccountControllerTest {
     void getBalance() {
         Flux<CurrentBalanceResponse> currentBalanceResponseFlux = Flux.just(CurrentBalanceResponse.builder().build(), CurrentBalanceResponse.builder().build());
         when(accountService.getBalance()).thenReturn(currentBalanceResponseFlux);
-        webClient.method(HttpMethod.GET).uri("/account/current-balance")
+        webClient.method(HttpMethod.GET).uri("/account/all")
                 .exchange()
                 .expectStatus()
                 .isOk()
