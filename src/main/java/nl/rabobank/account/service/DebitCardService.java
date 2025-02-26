@@ -58,14 +58,4 @@ public class DebitCardService extends CardServiceCommon implements CardService {
         return updateAccountBalance(accountEntity.toBuilder().balance(newBalance).build());
     }
 
-    @Override
-    public Mono<Void> payment(TransferRequest transferRequest) {
-        return null;
-    }
-
-    @Override
-    public Boolean isApplicable(CardTypeEnum cardTypeEnum) {
-        return cardTypeEnum == CardTypeEnum.DEBIT_CARD;
-    }
-
 }
