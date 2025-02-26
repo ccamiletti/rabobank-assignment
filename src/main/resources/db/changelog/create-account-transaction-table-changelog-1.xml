@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet author="admin" id="1">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="account_transaction"/>
+            </not>
+        </preConditions>
+        <createTable tableName="account_transaction">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="origin_account_number" type="VARCHAR(26)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="target_account_number" type="VARCHAR(26)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="amount" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="percentage" type="double">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="card_type" type="VARCHAR(25)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

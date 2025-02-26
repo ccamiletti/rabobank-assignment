@@ -1,0 +1,37 @@
+spring:
+  webflux:
+    base-path: /api
+  data:
+    r2dbc:
+      repositories:
+        enabled: true
+  r2dbc:
+    url: r2dbc:postgresql://postgres:5432/ccs-tech-db
+    username: ccs-tech-user
+    password: ccs-tech-password
+    pool:
+      name: TEST-POOL
+      initial-size: 1
+      max-size: 10
+      max-idle-time: 30m
+    properties:
+      schema: public
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+  liquibase:
+    enabled: true
+    url: jdbc:postgresql://postgres:5432/ccs-tech-db?autoReconnect=true"&"useSSL=false
+    user: ccs-tech-user
+    password: ccs-tech-password
+    change-log: classpath:/db/changelog-master.xml
+    default-schema: public
+
+app:
+  jwt:
+    token-expiration-seconds: 1800
+    secret-key: JWTSuperSecretKey
+  credit-card-amount-percentage: 1.0
+  debit-card-amount-percentage: 0.0

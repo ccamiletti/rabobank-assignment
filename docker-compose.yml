@@ -1,0 +1,52 @@
+# A Docker Compose must always start with the version tag.
+version: '3'
+# You should know that Docker Compose works with services.
+# 1 service = 1 container.
+# For example, a service, a server, a client, a database...
+# We use the keyword 'services' to start to create services.
+services:
+  postgres:
+    container_name: ccs-tech-server
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_DB=ccs-tech-db
+      - POSTGRES_USER=ccs-tech-user
+      - POSTGRES_PASSWORD=ccs-tech-password
+    ports:
+      - "5432:5432"
+    volumes:
+      #- postgres-db:/data/postgres
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - rabo-network
+
+  adminer_container:
+    image: adminer:latest
+    environment:
+      ADMINER_DEFAULT_SERVER: ccs-tech-server
+    ports:
+      - 1010:8080
+    networks:
+      - rabo-network
+
+  rabo_assignment:
+    build:
+      context: .  # Directory to build Docker image from.
+      dockerfile: Dockerfile  # Dockerfile to use for building the image.
+    ports:
+      - 8080:8080  # Maps port 8080 in the container to port 18080 on the host.
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_DATASOURCE_URL=r2dbc:postgresql://localhost:5432/ccs-tech-db?autoReconnect=true"&"useSSL=false
+      - SPRING_DATASOURCE_USERNAME=ccs-tech-user
+      - SPRING_DATASOURCE_PASSWORD=ccs-tech-password
+    networks:
+      - rabo-network
+
+networks:
+  rabo-network:
+
+volumes:
+  postgres-db:
