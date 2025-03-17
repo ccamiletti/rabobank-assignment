@@ -9,10 +9,4 @@ public interface CardService {
 
     Mono<Void> withdraw(final WithdrawalRequest withdrawalRequest);
     Mono<Void> transfer(final TransferRequest transferRequest);
-    Mono<Void> payment(final TransferRequest transferRequest);
-
-    Boolean isApplicable(CardTypeEnum cardTypeEnum);
-
-
-
 }

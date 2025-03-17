@@ -36,12 +36,12 @@ The application runs in a fully asynchronous environment taking advantage of web
 
 By default, the database is populated with the following data:
 * User Information
-  * User1:
-      * username: test
-      * password: test
-  * User2:
-      * username: test2
-      * password: test2
+    * User1:
+        * username: test
+        * password: test
+    * User2:
+        * username: test2
+        * password: test2
 
 * Card Information
     * Card1:
