@@ -30,20 +30,20 @@ services:
     networks:
       - rabo-network
 
-  rabo_assignment:
-    build:
-      context: .  # Directory to build Docker image from.
-      dockerfile: Dockerfile  # Dockerfile to use for building the image.
-    ports:
-      - 8080:8080  # Maps port 8080 in the container to port 18080 on the host.
-    depends_on:
-      - postgres
-    environment:
-      - SPRING_DATASOURCE_URL=r2dbc:postgresql://localhost:5432/ccs-tech-db?autoReconnect=true"&"useSSL=false
-      - SPRING_DATASOURCE_USERNAME=ccs-tech-user
-      - SPRING_DATASOURCE_PASSWORD=ccs-tech-password
-    networks:
-      - rabo-network
+#  rabo_assignment:
+#    build:
+#      context: .  # Directory to build Docker image from.
+#      dockerfile: Dockerfile  # Dockerfile to use for building the image.
+#    ports:
+#      - 8080:8080  # Maps port 8080 in the container to port 18080 on the host.
+#    depends_on:
+#      - postgres
+#    environment:
+#      - SPRING_DATASOURCE_URL=r2dbc:postgresql://localhost:5432/ccs-tech-db?autoReconnect=true"&"useSSL=false
+#      - SPRING_DATASOURCE_USERNAME=ccs-tech-user
+#      - SPRING_DATASOURCE_PASSWORD=ccs-tech-password
+#    networks:
+#      - rabo-network
 
 networks:
   rabo-network:

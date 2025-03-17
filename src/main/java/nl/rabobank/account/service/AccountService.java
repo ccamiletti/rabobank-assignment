@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.rabobank.account.entity.CardEntity;
 import nl.rabobank.account.exception.AccountException;
+import nl.rabobank.account.exception.CardException;
 import nl.rabobank.account.model.CardTypeEnum;
 import nl.rabobank.account.model.CurrentBalanceResponse;
 import nl.rabobank.account.model.TransferRequest;
@@ -25,7 +26,7 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
     private final CardRepository cardRepository;
-    private final List<CardService> cardServiceList;
+    private final CardServiceLocator cardServiceLocator;
 
     public Flux<CurrentBalanceResponse> getBalance() {
         return accountRepository.findAll()
@@ -66,10 +67,11 @@ public class AccountService {
     }
 
     private CardService findCardServiceByCardType(CardTypeEnum cardTypeEnum) {
-        return cardServiceList.stream()
-                .filter(cardService -> cardService.isApplicable(cardTypeEnum))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("CardService not found"));
+        CardService cardService = cardServiceLocator.getService(cardTypeEnum);
+        if (cardService == null) {
+            throw new CardException("Error getting service", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return cardService;
     }
 
     private Mono<CardService> getMonoErrorCardNotFound(final String iban) {

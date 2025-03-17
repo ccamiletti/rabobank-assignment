@@ -75,21 +75,11 @@ public class CreditCardService extends CardServiceCommon implements CardService 
 
     }
 
-    @Override
-    public Mono<Void> payment(TransferRequest transferRequest) {
-        return null;
-    }
-
     private Mono<CardEntity> getMonoErrorCardNotFound(final Long cardNumber) {
         return Mono.defer(() -> {
             log.error("Card with number {} not found", cardNumber);
             return Mono.error(new CardException("Card NOT FOUND", HttpStatus.INTERNAL_SERVER_ERROR));
         });
-    }
-
-    @Override
-    public Boolean isApplicable(CardTypeEnum cardTypeEnum) {
-        return cardTypeEnum == CardTypeEnum.CREDIT_CARD;
     }
 
 }
