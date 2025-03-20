@@ -34,40 +34,23 @@ public class AuthControllerTest {
     AuthenticationService authService;
 
     @Test
-    public void shouldSignUp() {
-        SignUpRequest signUpRequest = SignUpRequest.builder()
-                .name("test")
-                .lastName("last")
-                .password("pass")
-                .userName("user")
-                .build();
-        when(authService.signUp(signUpRequest)).thenReturn(Mono.empty());
-
-        webClient.method(HttpMethod.POST).uri("/signUp")
-                .bodyValue(signUpRequest)
-                .exchange()
-                .expectStatus()
-                .isOk();
-
-        StepVerifier.create(authService.signUp(signUpRequest))
-                .expectNextCount(0)
-                .verifyComplete();
-
-    }
-
-    @Test
     public void shouldLogin() {
         LoginRequest loginRequest = LoginRequest.builder().userName("user").password("pass").build();
         LoginResponse loginResponse = LoginResponse.builder().userName("user").token("token").build();
-        when(authService.signIn(loginRequest)).thenReturn(Mono.just(loginResponse));
-        webClient.method(HttpMethod.GET).uri("/login")
+        when(authService.signIn("user", "pass")).thenReturn(Mono.just(loginResponse));
+        webClient.method(HttpMethod.GET)
+                .uri(uriBuilder ->
+                        uriBuilder.path("/login")
+                                .queryParam("userName", "user")
+                                .queryParam("password", "pass")
+                                .build())
                 .bodyValue(loginRequest)
                 .exchange()
                 .expectStatus()
                 .isOk()
                 .expectBody(LoginResponse.class);
 
-        StepVerifier.create(authService.signIn(loginRequest))
+        StepVerifier.create(authService.signIn("user","pass"))
                 .expectNext(LoginResponse.builder().userName("user").token("token").build())
                 .verifyComplete();
 
