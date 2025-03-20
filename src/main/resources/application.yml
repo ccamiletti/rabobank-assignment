@@ -8,7 +8,7 @@ spring:
   r2dbc:
     url: r2dbc:postgresql://database-instance.cq35i9ttyarx.eu-north-1.rds.amazonaws.com/ccs-tech-db
     username: ccsTechUser
-    password: ccs-tech-password
+    password: ccsTechPass
     pool:
       name: TEST-POOL
       initial-size: 1
@@ -25,7 +25,7 @@ spring:
     enabled: true
     url: jdbc:postgresql://database-instance.cq35i9ttyarx.eu-north-1.rds.amazonaws.com/ccs-tech-db?useSSL=false
     user: ccsTechUser
-    password: ccs-tech-password
+    password: ccsTechPass
     change-log: classpath:/db/changelog-master.xml
     default-schema: public
 
