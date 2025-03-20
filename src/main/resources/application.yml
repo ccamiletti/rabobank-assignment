@@ -23,7 +23,7 @@ spring:
         format_sql: true
   liquibase:
     enabled: true
-    url: jdbc:postgresql://database-instance.cq35i9ttyarx.eu-north-1.rds.amazonaws.com/ccs-tech-db?autoReconnect=true"&"useSSL=false
+    url: jdbc:postgresql://database-instance.cq35i9ttyarx.eu-north-1.rds.amazonaws.com/ccs-tech-db?useSSL=false
     user: ccsTechUser
     password: ccs-tech-password
     change-log: classpath:/db/changelog-master.xml
