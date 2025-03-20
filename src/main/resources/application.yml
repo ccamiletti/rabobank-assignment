@@ -6,8 +6,8 @@ spring:
       repositories:
         enabled: true
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/ccs-tech-db
-    username: ccs-tech-user
+    url: r2dbc:postgresql://database-instance.cq35i9ttyarx.eu-north-1.rds.amazonaws.com/ccs-tech-db
+    username: ccsTechUser
     password: ccs-tech-password
     pool:
       name: TEST-POOL
@@ -23,8 +23,8 @@ spring:
         format_sql: true
   liquibase:
     enabled: true
-    url: jdbc:postgresql://localhost:5432/ccs-tech-db?autoReconnect=true"&"useSSL=false
-    user: ccs-tech-user
+    url: jdbc:postgresql://database-instance.cq35i9ttyarx.eu-north-1.rds.amazonaws.com/ccs-tech-db?autoReconnect=true"&"useSSL=false
+    user: ccsTechUser
     password: ccs-tech-password
     change-log: classpath:/db/changelog-master.xml
     default-schema: public
