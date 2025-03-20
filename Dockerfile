@@ -1,8 +1,9 @@
 FROM openjdk:17
-COPY --from=build /app/target/rabobank-assignment.jar /app/app.jar
 
 WORKDIR /app
 
+COPY ./target/rabobank-assignment.jar /app
+
 EXPOSE 8080
 
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "rabobank-assignment.jar"]
