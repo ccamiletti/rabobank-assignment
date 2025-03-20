@@ -7,7 +7,7 @@ COPY /pom.xml /app
 WORKDIR /app
 RUN mvn clean install -U
 
-FROM openjdk:21
+FROM amazoncorretto:21
 COPY --from=build /app/target/rabobank-assignment.jar /app/app.jar
 
 WORKDIR /app
