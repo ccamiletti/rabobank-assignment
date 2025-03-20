@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 public class CurrentBalanceResponse {
 
     private final String accountNumber;
+    private final Long cardNumber;
     private final Double balance;
 
 }

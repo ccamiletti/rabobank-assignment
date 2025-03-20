@@ -1,6 +1,5 @@
 package nl.rabobank.account.service;
 
-import nl.rabobank.account.model.CardTypeEnum;
 import nl.rabobank.account.model.TransferRequest;
 import nl.rabobank.account.model.WithdrawalRequest;
 import reactor.core.publisher.Mono;

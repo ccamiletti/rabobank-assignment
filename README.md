@@ -37,10 +37,10 @@ The application runs in a fully asynchronous environment taking advantage of web
 By default, the database is populated with the following data:
 * User Information
     * User1:
-        * username: test
+        * username: test@gmail.com
         * password: test
     * User2:
-        * username: test2
+        * username: test2@gmail.com
         * password: test2
 
 * Card Information
@@ -54,6 +54,12 @@ By default, the database is populated with the following data:
         * type: CREDIT_CARD
 
 Here are some endpoints you can call:
+
+
+### Swagger api documentation
+
+* http://localhost:8080/api/webjars/swagger-ui/index.html
+
 
 ### Login (No Auth)
 

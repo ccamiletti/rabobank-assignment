@@ -2,10 +2,7 @@ package nl.rabobank.account.service;
 
 import lombok.RequiredArgsConstructor;
 import nl.rabobank.account.model.CardTypeEnum;
-import nl.rabobank.account.model.TransferRequest;
-import nl.rabobank.account.model.WithdrawalRequest;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor

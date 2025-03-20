@@ -2,7 +2,6 @@ package nl.rabobank.account.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nl.rabobank.account.entity.CardEntity;
 import nl.rabobank.account.exception.AccountException;
 import nl.rabobank.account.exception.CardException;
 import nl.rabobank.account.model.CardTypeEnum;
@@ -17,8 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -30,11 +27,15 @@ public class AccountService {
 
     public Flux<CurrentBalanceResponse> getBalance() {
         return accountRepository.findAll()
-                .map(account -> CurrentBalanceResponse.builder()
-                        .accountNumber(account.getIban())
-                        .balance(account.getBalance()).build());
+                .flatMap(account -> cardRepository.findByIban(account.getIban())
+                        .map(card -> CurrentBalanceResponse.builder()
+                                .accountNumber(account.getIban())
+                                .balance(account.getBalance())
+                                .cardNumber(card.getNumber())
+                                .build()
+                        )
+                );
     }
-
 
     @Transactional
     public Mono<Void> withdraw(final WithdrawalRequest withdrawalRequest) {

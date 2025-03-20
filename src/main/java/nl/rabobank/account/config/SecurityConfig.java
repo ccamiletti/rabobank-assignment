@@ -28,10 +28,14 @@ public class SecurityConfig {
         AuthenticationWebFilter authenticationWebFilter = new AuthenticationWebFilter(authenticationManager);
         authenticationWebFilter.setServerAuthenticationConverter(authConverter);
         return http.authorizeExchange(auth -> {
+                auth.pathMatchers("/swagger-ui/index.html").permitAll();
+                auth.pathMatchers("/swagger-ui/**").permitAll();
                 auth.pathMatchers("/login").permitAll();
                 auth.pathMatchers("/test").permitAll();
                 auth.pathMatchers("/signUp").permitAll();
-                auth.pathMatchers("/auth").authenticated();
+                auth.pathMatchers("/webjars/swagger-ui/**").permitAll();
+                auth.pathMatchers("/v3/api-docs/**").permitAll();
+                auth.pathMatchers("/swagger-ui/webjars/**").permitAll();
                 auth.anyExchange().authenticated();
             })
             .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
