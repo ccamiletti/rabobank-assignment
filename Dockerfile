@@ -8,7 +8,7 @@ WORKDIR /app
 RUN mvn clean install -U
 
 FROM openjdk:21
-COPY --from=build /app/target/rabobank-banking-account-0.0.1-SNAPSHOT.jar /app/app.jar
+COPY --from=build /app/target/rabobank-assignment.jar /app/app.jar
 
 WORKDIR /app
 
