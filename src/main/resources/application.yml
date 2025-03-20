@@ -6,7 +6,7 @@ spring:
       repositories:
         enabled: true
   r2dbc:
-    url: r2dbc:postgresql://database-instance.cq35i9ttyarx.eu-north-1.rds.amazonaws.com/ccsTechDB
+    url: r2dbc:postgresql://database-1.cq35i9ttyarx.eu-north-1.rds.amazonaws.com/ccsTechDB
     username: ccsTechUser
     password: ccsTechPass
     pool:
@@ -23,7 +23,7 @@ spring:
         format_sql: true
   liquibase:
     enabled: true
-    url: jdbc:postgresql://database-instance.cq35i9ttyarx.eu-north-1.rds.amazonaws.com/ccsTechDB?useSSL=false
+    url: jdbc:postgresql://database-1.cq35i9ttyarx.eu-north-1.rds.amazonaws.com/ccsTechDB?useSSL=false
     user: ccsTechUser
     password: ccsTechPass
     change-log: classpath:/db/changelog-master.xml
