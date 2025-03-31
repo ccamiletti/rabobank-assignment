@@ -64,13 +64,8 @@ Here are some endpoints you can call:
 ### Login (No Auth)
 
 ```
-POST http://localhost:8080/api/login
+GET http://localhost:8080/api/login?userName=test@gmail.com&password=test
 Accept: application/json
-Content-Type: application/json
-{
-    "userName":"test",
-    "password":"test"
-}    
 
 RESPONSE: HTTP 200
 {
