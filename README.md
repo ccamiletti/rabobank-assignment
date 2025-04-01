@@ -58,13 +58,13 @@ Here are some endpoints you can call:
 
 ### Swagger api documentation
 
-* http://localhost:8080/api/swagger-ui/index.html
+* http://localhost:8480/api/swagger-ui/index.html
 
 
 ### Login (No Auth)
 
 ```
-GET http://localhost:8080/api/login?userName=test@gmail.com&password=test
+GET http://localhost:8084/api/login?userName=test@gmail.com&password=test
 Accept: application/json
 
 RESPONSE: HTTP 200
@@ -76,7 +76,7 @@ RESPONSE: HTTP 200
 
 ### Transfer (Bearer Token)
 ```
-POST http://localhost:8080/api/account/transfer
+POST http://localhost:8480/api/account/transfer
 Accept: application/json
 Content-Type: application/json
 {
@@ -90,7 +90,7 @@ RESPONSE: HTTP 200
 
 ### Withdrawal (Bearer Token)
 ```
-POST http://localhost:8080/api/account/withdraw
+POST http://localhost:8480/api/account/withdraw
 Accept: application/json
 Content-Type: application/json
 {
@@ -103,16 +103,18 @@ RESPONSE: HTTP 200
 
 ### All accounts (Bearer Token)
 ```
-GET http://localhost:8080/api/account/all
+GET http://localhost:8480/api/account/all
 
 BODY RESPONSE:
 [
     {
         "accountNumber": "RABO111",
+        "cardNumber": "1111",
         "balance": 20000.0
     },
     {
         "accountNumber": "RABO222",
+        "cardNumber": "2222",
         "balance": 20000.0
     }
 ]

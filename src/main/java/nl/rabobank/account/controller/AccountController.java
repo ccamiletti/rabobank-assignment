@@ -35,9 +35,4 @@ public class AccountController {
         return accountService.transfer(transferRequest);
     }
 
-    @PostMapping("/pay")
-    public Mono<Void> payment(@RequestBody TransferRequest transferRequest) {
-        return null; //accountService.payment(transferRequest);
-    }
-
 }
