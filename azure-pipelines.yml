@@ -10,15 +10,18 @@ pool: self-hosted
 stages:
 - stage: Build
   displayName: Build stage
-  steps:
+  jobs:
+  - job: Build
+    displayName: Build maven project
+    steps:
     - task: Maven@3
       displayName: 'Maven package'
-      input:
+      inputs:
         mavenPomFile: 'pom.xml'
         goals: 'package'
-    - task: CopyFile@2
+    - task: CopyFiles@2
       displayName: 'copy files to artifact staging directory'
-      input:
+      inputs:
         SourceFolder: '$(System.DefaultWorkingDirectory)'
         Contents: '**/target/*.jar'
         TargetFolder: $(Build.ArtifactStagingDirectory)
