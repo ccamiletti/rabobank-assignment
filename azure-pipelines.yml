@@ -14,7 +14,7 @@ stages:
   - job: Build
     displayName: Build maven project
     steps:
-    - task: Maven@3
+    - task: Maven@4
       displayName: 'Maven package'
       inputs:
         mavenPomFile: 'pom.xml'
