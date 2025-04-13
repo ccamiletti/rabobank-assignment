@@ -27,5 +27,5 @@ stages:
         TargetFolder: $(Build.ArtifactStagingDirectory)
     - task: PublishBuildArtifacts@1
       inputs:
-        PathtoPublish: $(Build.ArtifactStaginDirectory)
+        PathtoPublish: $(Build.ArtifactStagingDirectory)
         ArtifactName: Rabo-app-Build
