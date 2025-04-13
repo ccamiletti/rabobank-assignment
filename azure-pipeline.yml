@@ -1,0 +1,24 @@
+trigger:
+- azure
+
+variables:
+  - name: process.clean
+    value: false
+
+pool: self-hosted
+
+stages:
+- stage: Build
+  displayName: Build stage
+  steps:
+    - task: Maven@3
+      displayName: 'Maven package'
+      input:
+        mavenPomFile: 'pom.xml'
+        goals: 'package'
+    - task: CopyFile@2
+      displayName: 'copy files to artifact staging directory'
+      input:
+        SourceFolder: '$(System.DefaultWorkingDirectory)'
+        Contents: '**/target/*.jar'
+        TargetFolder: $(Build.ArtifactStagingDirectory)
